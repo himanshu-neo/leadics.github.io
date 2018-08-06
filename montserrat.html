@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Themes for Leadics Highcharts</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:100,300,400,500,600" rel="stylesheet">
+</head>
+<body>
+
+<style> .row{margin-bottom:80px;}</style>
+
+<div class="container">
+	<div class="starter-template">
+		<h1>Themes for Leadics Highcharts</h1>
+	</div>
+
+   <div class='row'>
+   <div class="col-md-6" id="basic_line"></div>
+   <div class="col-md-6" id="basic_area"></div>
+   </div>
+
+   <div class='row'>
+   <div class="col-md-6" id="stacked_area"></div>
+   <div class="col-md-6" id="percentage_area"></div>
+   </div>
+
+   <div class='row'>
+   <div class="col-md-6" id="basic_column"></div>
+   <div class="col-md-6" id="stacked_column"></div>
+   </div>
+
+   <div class='row'>
+   <div class="col-md-6" id="stacked_bar"></div>
+   <div class="col-md-6" id="bar_with_negative_stack"></div>
+   </div>
+
+   <div class='row'>
+   <div class="col-md-6" id="stacked_and_grouped_column"></div>
+   <div class="col-md-6" id="column_range"></div>
+   </div>
+
+   <div class='row'>
+   <div class="col-md-6" id="pie_chart"></div>
+   <div class="col-md-6" id="Semi_circle_donut"></div>
+   </div>
+
+   <div class='row'>
+   <div class="col-md-6" id="column_line_and_pie"></div>
+   <div class="col-md-6" id="high_map"></div>
+   </div>
+
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="js/highcharts-more.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/mapdata/countries/in/custom/in-all-disputed.js"></script>
+
+<script type="text/javascript">
+
+/* Customization - Starts Here  */
+
+var	primaryTheme = ["#00B19D", "#4E3363", "#3A99D5", "#00AE84", "#49494A", "#318ACA"]
+var secondaryTheme = ["#029697", "#00AE84", "#65C082", "#00B29E"]
+
+Highcharts.setOptions({
+	legend: {
+		itemStyle: {
+            color: '#898888',
+            fontWeight: 'light'
+        },
+        itemMarginTop: 5,
+        itemMarginBottom: 5
+    },
+    chart: {
+		//backgroundColor: '#F1F4F7',
+        style: {
+            fontFamily: 'Montserrat',
+        }
+    },
+	title: {align: 'left'},
+	xAxis: {
+        labels: {style: {color: '#BBBBBC'}},
+		title: {style: {color: '#898888'}}
+    },
+	yAxis: {
+        labels: {style: {color: '#BBBBBC'}},
+		title: {style: {color: '#898888'}}
+    },
+	credits: {
+		enabled: false
+	}
+
+});
+
+/* Customization - Ends Here  */
+
+
+//Basic Line Script Starts Here
+Highcharts.chart('basic_line', {
+	colors: primaryTheme,
+	exporting: {
+        chartOptions: { // specific options for the exported image
+            plotOptions: {
+                series: {
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            }
+        },
+        fallbackToExportServer: false
+    },
+    title: {text: 'Solar Employment Growth by Sector, 2010-2016'},
+    yAxis: {
+        title: {text: 'Number of Employees'}
+    },
+    legend: {
+        layout: 'vertical',
+        align: 'right',
+        verticalAlign: 'middle',
+		itemMarginTop: 5,
+        itemMarginBottom: 5
+    },
+    plotOptions: {
+        series: {
+            label: {
+                connectorAllowed: false
+            },
+			bar: {
+                pointWidth: 1
+            },
+            pointStart: 2010
+        }
+    },
+
+
+    series: [{
+        name: 'Installation',
+        data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
+    }, {
+        name: 'Manufacturing',
+        data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
+    }, {
+        name: 'Sales & Distribution',
+        data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
+    }, {
+        name: 'Project Development',
+        data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
+    }, {
+        name: 'Other',
+        data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
+    }],
+    responsive: {
+        rules: [{
+            condition: {
+                maxWidth: 500
+            },
+            chartOptions: {
+                legend: {
+                    layout: 'horizontal',
+                    align: 'center',
+                    verticalAlign: 'bottom'
+                }
+            }
+        }]
+    }
+});
+//Basic Line Script Ends Here
+
+
+
+//Basic Area Script Starts Here
+Highcharts.chart('basic_area', {
+	colors: primaryTheme,
+    chart: {type: 'area'},
+    title: {text: 'US and USSR nuclear stockpiles'},
+    xAxis: {
+        allowDecimals: false,
+        labels: {
+            formatter: function () {
+                return this.value; // clean, unformatted number for year
+            }
+        }
+    },
+    yAxis: {
+        title: {text: 'Nuclear weapon states'},
+        labels: {
+            formatter: function () {
+                return this.value / 1000 + 'k';
+            }
+        }
+    },
+    tooltip: {
+        pointFormat: '{series.name} produced <b>{point.y:,.0f}</b><br/>warheads in {point.x}'
+    },
+    plotOptions: {
+        area: {
+            pointStart: 1940,
+            marker: {
+                enabled: false,
+                symbol: 'circle',
+                radius: 2,
+                states: {
+                    hover: {
+                        enabled: true
+                    }
+                }
+            }
+        }
+    },
+    series: [{
+        name: 'USA',
+        data: [null, null, null, null, null, 6, 11, 32, 110, 235, 369, 640,
+            1005, 1436, 2063, 3057, 4618, 6444, 9822, 15468, 20434, 24126,
+            27387, 29459, 31056, 31982, 32040, 31233, 29224, 27342, 26662,
+            26956, 27912, 28999, 28965, 27826, 25579, 25722, 24826, 24605,
+            24304, 23464, 23708, 24099, 24357, 24237, 24401, 24344, 23586,
+            22380, 21004, 17287, 14747, 13076, 12555, 12144, 11009, 10950,
+            10871, 10824, 10577, 10527, 10475, 10421, 10358, 10295, 10104]
+    }, {
+        name: 'USSR/Russia',
+        data: [null, null, null, null, null, null, null, null, null, null,
+            5, 25, 50, 120, 150, 200, 426, 660, 869, 1060, 1605, 2471, 3322,
+            4238, 5221, 6129, 7089, 8339, 9399, 10538, 11643, 13092, 14478,
+            15915, 17385, 19055, 21205, 23044, 25393, 27935, 30062, 32049,
+            33952, 35804, 37431, 39197, 45000, 43000, 41000, 39000, 37000,
+            35000, 33000, 31000, 29000, 27000, 25000, 24000, 23000, 22000,
+            21000, 20000, 19000, 18000, 18000, 17000, 16000]
+    }]
+});
+//Basic Area Script Ends Here
+
+
+
+//Stacked Area Script Starts Here
+Highcharts.chart('stacked_area', {
+	colors: primaryTheme,
+    chart: {type: 'area'},
+    title: {text: 'Historic and Estimated Worldwide Population Growth by Region'},
+    xAxis: {
+        categories: ['1750', '1800', '1850', '1900', '1950', '1999', '2050'],
+        tickmarkPlacement: 'on',
+        title: {
+            enabled: false
+        }
+    },
+    yAxis: {
+        title: {text: 'Billions'},
+        labels: {
+            formatter: function () {
+                return this.value / 1000;
+            }
+        }
+    },
+    tooltip: {
+        split: true,
+        valueSuffix: ' millions'
+    },
+    plotOptions: {
+        area: {
+            stacking: 'normal',
+            lineColor: '#666666',
+            lineWidth: 1,
+            marker: {
+                lineWidth: 1,
+                lineColor: '#666666'
+            }
+        }
+    },
+    series: [{
+        name: 'Asia',
+        data: [502, 635, 809, 947, 1402, 3634, 5268]
+    }, {
+        name: 'Africa',
+        data: [106, 107, 111, 133, 221, 767, 1766]
+    }, {
+        name: 'Europe',
+        data: [163, 203, 276, 408, 547, 729, 628]
+    }, {
+        name: 'America',
+        data: [18, 31, 54, 156, 339, 818, 1201]
+    }, {
+        name: 'Oceania',
+        data: [2, 2, 2, 6, 13, 30, 46]
+    }]
+});
+//Stacked Area Script Ends Here
+
+
+
+//Percentage Area Script Starts Here
+Highcharts.chart('percentage_area', {
+	colors: primaryTheme,
+    chart: {type: 'area'},
+    title: {text: 'Historic and Estimated Worldwide Population Distribution by Region'},
+    xAxis: {
+        categories: ['1750', '1800', '1850', '1900', '1950', '1999', '2050'],
+        tickmarkPlacement: 'on',
+        title: {enabled: false}
+    },
+    yAxis: {
+        title: {text: 'Percent'}
+    },
+    tooltip: {
+        pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.percentage:.1f}%</b> ({point.y:,.0f} millions)<br/>',
+        split: true
+    },
+    plotOptions: {
+        area: {
+            stacking: 'percent',
+            lineColor: '#ffffff',
+            lineWidth: 1,
+            marker: {
+                lineWidth: 1,
+                lineColor: '#ffffff'
+            }
+        }
+    },
+    series: [{
+        name: 'Asia',
+        data: [502, 635, 809, 947, 1402, 3634, 5268]
+    }, {
+        name: 'Africa',
+        data: [106, 107, 111, 133, 221, 767, 1766]
+    }, {
+        name: 'Europe',
+        data: [163, 203, 276, 408, 547, 729, 628]
+    }, {
+        name: 'America',
+        data: [18, 31, 54, 156, 339, 818, 1201]
+    }, {
+        name: 'Oceania',
+        data: [2, 2, 2, 6, 13, 30, 46]
+    }]
+});
+//Percentage Area Script Ends Here
+
+
+
+//Basic Column Script Starts Here
+Highcharts.chart('basic_column', {
+	colors: primaryTheme,
+    chart: {type: 'column'},
+    title: {text: 'Monthly Average Rainfall'},
+    xAxis: {
+        categories: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {text: 'Rainfall (mm)'}
+    },
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+        }
+    },
+    series: [{
+        name: 'Tokyo',
+        data: [49.9, 71.5, 106.4, 129.2, 144.0, 176.0, 135.6, 148.5, 216.4, 194.1, 95.6, 54.4]
+
+    }, {
+        name: 'New York',
+        data: [83.6, 78.8, 98.5, 93.4, 106.0, 84.5, 105.0, 104.3, 91.2, 83.5, 106.6, 92.3]
+
+    }, {
+        name: 'London',
+        data: [48.9, 38.8, 39.3, 41.4, 47.0, 48.3, 59.0, 59.6, 52.4, 65.2, 59.3, 51.2]
+
+    }, {
+        name: 'Berlin',
+        data: [42.4, 33.2, 34.5, 39.7, 52.6, 75.5, 57.4, 60.4, 47.6, 39.1, 46.8, 51.1]
+    }]
+});
+//Basic Column Script Ends Here
+
+
+
+//Stacked Column Script Starts Here
+
+Highcharts.chart('stacked_column', {
+	colors: primaryTheme,
+    chart: {type: 'column'},
+    title: {text: 'Stacked column chart'},
+    xAxis: {categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']},
+
+
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Total fruit consumption'
+        },
+        stackLabels: {
+            enabled: true,
+            style: {
+                fontWeight: 'bold',
+                color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+            }
+        }
+    },
+    legend: {
+        align: 'right',
+        x: -30,
+        verticalAlign: 'top',
+        y: 25,
+        floating: true,
+        backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+        borderColor: '#CCC',
+        borderWidth: 1,
+        shadow: false
+    },
+    tooltip: {
+        headerFormat: '<b>{point.x}</b><br/>',
+        pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+    },
+    plotOptions: {
+		series: {
+            fillOpacity: 0.2
+        },
+        column: {
+			column: {colorByPoint: true},
+
+        }
+    },
+
+	series: [{
+        name: 'John',
+        data: [5, 3, 4, 7, 2]
+    }, {
+        name: 'Jane',
+        data: [2, 2, 3, 2, 1]
+    }, {
+        name: 'Joe',
+        data: [3, 4, 4, 2, 5]
+    }]
+
+
+});
+//Stacked Column Script Ends Here
+
+
+
+//Stacked Bar Script Starts Here
+Highcharts.chart('stacked_bar', {
+	colors: secondaryTheme,
+    chart: {type: 'bar'},
+    title: {text: 'Stacked bar chart'},
+    xAxis: {categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']},
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Total fruit consumption'
+        }
+    },
+    legend: {reversed: true},
+    plotOptions: {
+        series: {stacking: 'normal'}
+    },
+    series: [{
+        name: 'John',
+        data: [5, 3, 4, 7, 2]
+    }, {
+        name: 'Jane',
+        data: [2, 2, 3, 2, 1]
+    }, {
+        name: 'Joe',
+        data: [3, 4, 4, 2, 5]
+    }]
+});
+//Stacked Bar Script Ends Here
+
+
+
+//Bar with Negative Stack Script Starts Here
+// Age categories
+var categories = ['0-4', '5-9', '10-14', '15-19','20-24', '25-29', '30-34', '35-39', '40-44','45-49', '50-54', '55-59', '60-64', '65-69','70-74', '75-79', '80-84', '85-89', '90-94','95-99', '100 + '];
+
+Highcharts.chart('bar_with_negative_stack', {
+	colors: primaryTheme,
+    chart: {type: 'bar'},
+    title: {text: 'Population pyramid for Germany, 2015'},
+
+    xAxis: [{
+        categories: categories,
+        reversed: false,
+        labels: {
+            step: 1
+        }
+    }, { // mirror axis on right side
+        opposite: true,
+        reversed: false,
+        categories: categories,
+        linkedTo: 0,
+        labels: {
+            step: 1
+        }
+    }],
+    yAxis: {
+        title: {
+            text: null
+        },
+        labels: {
+            formatter: function () {
+                return Math.abs(this.value) + '%';
+            }
+        }
+    },
+    plotOptions: {
+        series: {
+            stacking: 'normal'
+        }
+    },
+    tooltip: {
+        formatter: function () {
+            return '<b>' + this.series.name + ', age ' + this.point.category + '</b><br/>' +
+                'Population: ' + Highcharts.numberFormat(Math.abs(this.point.y), 0);
+        }
+    },
+    series: [{
+        name: 'Male',
+        data: [-2.2, -2.2, -2.3, -2.5, -2.7, -3.1, -3.2,
+            -3.0, -3.2, -4.3, -4.4, -3.6, -3.1, -2.4,
+            -2.5, -2.3, -1.2, -0.6, -0.2, -0.0, -0.0]
+    }, {
+        name: 'Female',
+        data: [2.1, 2.0, 2.2, 2.4, 2.6, 3.0, 3.1, 2.9,
+            3.1, 4.1, 4.3, 3.6, 3.4, 2.6, 2.9, 2.9,
+            1.8, 1.2, 0.6, 0.1, 0.0]
+    }]
+});
+//Bar with Negative Stack Script Ends Here
+
+
+
+//Stacked and Grouped Column Script Starts Here
+Highcharts.chart('stacked_and_grouped_column', {
+	colors: secondaryTheme,
+    chart: {type: 'column'},
+    title: {text: 'Total fruit consumtion, grouped by gender'},
+    xAxis: {categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']},
+    yAxis: {
+        allowDecimals: false,
+        min: 0,
+        title: {
+            text: 'Number of fruits'
+        }
+    },
+    tooltip: {
+        formatter: function () {
+            return '<b>' + this.x + '</b><br/>' +
+                this.series.name + ': ' + this.y + '<br/>' +
+                'Total: ' + this.point.stackTotal;
+        }
+    },
+    plotOptions: {
+        column: {stacking: 'normal'}
+    },
+    series: [{
+        name: 'John',
+        data: [5, 3, 4, 7, 2],
+        stack: 'male'
+    }, {
+        name: 'Joe',
+        data: [3, 4, 4, 2, 5],
+        stack: 'male'
+    }, {
+        name: 'Jane',
+        data: [2, 5, 6, 2, 1],
+        stack: 'female'
+    }, {
+        name: 'Janet',
+        data: [3, 0, 4, 4, 3],
+        stack: 'female'
+    }]
+});
+//Stacked and Grouped Column Script Ends Here
+
+
+
+//Column Range Script Starts Here
+Highcharts.chart('column_range', {
+	colors: primaryTheme,
+    chart: {type: 'columnrange',inverted: true},
+    title: {text: 'Temperature variation by month'},
+    xAxis: {
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    },
+    yAxis: {
+        title: {
+            text: 'Temperature ( °C )'
+        }
+    },
+    tooltip: {valueSuffix: '°C'},
+    plotOptions: {
+        columnrange: {
+            dataLabels: {
+                enabled: true,
+                format: '{y}°C'
+            }
+        }
+    },
+
+    legend: {enabled: false},
+    series: [{
+        name: 'Temperatures',
+        data: [[-9.7, 9.4],[-8.7, 6.5],[-3.5, 9.4],[-1.4, 19.9],[0.0, 22.6],[2.9, 29.5],[9.2, 30.7],[7.3, 26.5],[4.4, 18.0],[-3.1, 11.4],[-5.2, 10.4],[-13.5, 9.8]]
+    }]
+
+});
+//Column Range Script Ends Here
+
+
+
+//Pie Chart Script Starts Here
+Highcharts.chart('pie_chart', {
+	colors: primaryTheme,
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {text: 'Browser market shares January, 2015 to May, 2015'},
+    tooltip: {pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'},
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                style: {
+                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                }
+            }
+        }
+    },
+    series: [{
+        name: 'Brands',
+        colorByPoint: true,
+        data: [{
+            name: 'IE',
+            y: 56.33
+        }, {
+            name: 'Chrome',
+            y: 24.03,
+            sliced: true,
+            selected: true
+        }, {
+            name: 'Firefox',
+            y: 10.38
+        }, {
+            name: 'Safari',
+            y: 4.77
+        }, {
+            name: 'Opera',
+            y: 0.91
+        }, {
+            name: 'Other',
+            y: 0.2
+        }]
+    }]
+});
+//Pie Chart Script Ends Here
+
+
+
+//Semi Circle Donut Script Starts Here
+Highcharts.chart('Semi_circle_donut', {
+	colors: primaryTheme,
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: 0,
+        plotShadow: false
+    },
+    title: {
+        text: 'Browser<br>shares<br>2015',
+        align: 'center',
+        verticalAlign: 'middle',
+        y: 40
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    plotOptions: {
+        pie: {
+            dataLabels: {
+                enabled: true,
+                distance: -50,
+                style: {
+                    fontWeight: 'bold',
+                    color: 'white'
+                }
+            },
+            startAngle: -90,
+            endAngle: 90,
+            center: ['50%', '75%']
+        }
+    },
+    series: [{
+        type: 'pie',
+        name: 'Browser share',
+        innerSize: '50%',
+        data: [
+            ['Firefox',   10.38],
+            ['IE',       56.33],
+            ['Chrome', 24.03],
+            ['Safari',    4.77],
+            ['Opera',     0.91],
+            {
+                name: 'Proprietary or Undetectable',
+                y: 0.2,
+                dataLabels: {
+                    enabled: false
+                }
+            }
+        ]
+    }]
+});
+//Semi Circle Donut Script Ends Here
+
+
+
+//Column Line and Pie Script Starts Here
+Highcharts.chart('column_line_and_pie', {
+	colors: primaryTheme,
+    title: {text: 'Combination chart'},
+    xAxis: {categories: ['Apples', 'Oranges', 'Pears', 'Bananas', 'Plums']},
+    labels: {
+        items: [{
+            html: 'Total fruit consumption',
+            style: {
+                left: '50px',
+                top: '18px',
+                color: (Highcharts.theme && Highcharts.theme.textColor) || 'black'
+            }
+        }]
+    },
+    series: [{
+        type: 'column',
+        name: 'Jane',
+        data: [3, 2, 1, 3, 4]
+    }, {
+        type: 'column',
+        name: 'John',
+        data: [2, 3, 5, 7, 6]
+    }, {
+        type: 'column',
+        name: 'Joe',
+        data: [4, 3, 3, 9, 0]
+    }, {
+        type: 'spline',
+        name: 'Average',
+        data: [3, 2.67, 3, 6.33, 3.33],
+        marker: {
+            lineWidth: 2,
+            lineColor: Highcharts.getOptions().colors[3],
+            fillColor: 'white'
+        }
+    }, {
+        type: 'pie',
+
+        name: 'Total consumption',
+        data: [{
+            name: 'Jane',
+            y: 13,
+        }, {
+            name: 'John',
+            y: 23,
+        }, {
+            name: 'Joe',
+            y: 19,
+        }],
+
+        center: [100, 80],
+        size: 100,
+        showInLegend: false,
+        dataLabels: {
+            enabled: false
+        }
+    }]
+});
+//Column Line and Pie Script Ends Here
+
+
+//High Map Script Starts Here
+// Prepare demo data
+// Data is joined to map using value of 'hc-key' property by default.
+// See API docs for 'joinBy' for more info on linking data and map.
+var data = [
+    ['in-an', 0],
+    ['in-wb', 1],
+    ['in-ld', 2],
+    ['in-5390', 3],
+    ['in-py', 4],
+    ['in-3464', 5],
+    ['in-mz', 6],
+    ['in-as', 7],
+    ['in-pb', 8],
+    ['in-ga', 9],
+    ['in-2984', 10],
+    ['in-jk', 11],
+    ['in-hr', 12],
+    ['in-nl', 13],
+    ['in-mn', 14],
+    ['in-tr', 15],
+    ['in-mp', 16],
+    ['in-ct', 17],
+    ['in-ar', 18],
+    ['in-ml', 19],
+    ['in-kl', 20],
+    ['in-tn', 21],
+    ['in-ap', 22],
+    ['in-ka', 23],
+    ['in-mh', 24],
+    ['in-or', 25],
+    ['in-dn', 26],
+    ['in-dl', 27],
+    ['in-hp', 28],
+    ['in-rj', 29],
+    ['in-up', 30],
+    ['in-ut', 31],
+    ['in-jh', 32],
+    ['in-ch', 33],
+    ['in-br', 34],
+    ['in-sk', 35]
+];
+
+// Create the chart
+Highcharts.mapChart('high_map', {
+    chart: {
+        map: 'countries/in/custom/in-all-disputed'
+    },
+
+    title: {
+        text: 'Highmaps basic demo'
+    },
+
+    subtitle: {
+        text: 'Source map: <a href="http://code.highcharts.com/mapdata/countries/in/custom/in-all-disputed.js">India with disputed territories</a>'
+    },
+
+    mapNavigation: {
+        enabled: true,
+        buttonOptions: {
+            verticalAlign: 'bottom'
+        }
+    },
+
+    colorAxis: {
+        min: 0
+    },
+
+    series: [{
+        data: data,
+        name: 'Random data',
+        states: {
+            hover: {
+                color: '#BADA55'
+            }
+        },
+        dataLabels: {
+            enabled: true,
+            format: '{point.name}'
+        }
+    }]
+});//High Map Script Ends Here
+
+</script>
+
+    </body>
+</html>
